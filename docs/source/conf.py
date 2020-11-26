@@ -55,14 +55,13 @@ html_theme = 'sphinx_rtd_theme'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-
+html_logo = 'mpmlogo.png'
 html_theme_options = {
-    'canonical_url': '',
     'logo_only': True,
     'display_version': True,
     'prev_next_buttons_location': 'bottom',
     'style_external_links': True,
-    'style_nav_header_background': 'white',
+    'style_nav_header_background': '#2b2b2b',
     # Toc options
     'collapse_navigation': False,
     'sticky_navigation': True,
