@@ -1,65 +1,5 @@
-****************
-Installation MPM
-****************
-
-System Requirements
--------------------
-
-PHP ^7.3
-
-Node ^v14.3
-
-Installation
-------------
-
-1. Clone or download the repository
-2. Build the docker containers with ``docker-compose up``
-
-Installing Dependencies
------------------------
-
-All dependencies will be automatically installed on the installation
-step. However, if you need additional dependencies, install them in the
-``laravel`` container. To Install additional php dependencies enter the
-Docker-Container named ``laravel`` navigate to ``mpmanager`` & run
-``php ../composer.phar install XXX``
-
-Migrate the database
---------------------
-
--  Run ``docker exec -it laravel /bin/bash`` to jump into the laravel
-   container
--  navigate to ``mpmanager`` directory with ``cd mpmanager``
--  Run ``php artisan migrate --seed`` to initialize the Database. The
-   ``--seed`` option will create the default user to login.
--  The default user to login is ``admin@admin.com`` and
-   ``basic-password``.
-
-phpMyAdmin
-----------
-
-To project also includes phpMyAdmin which enables quick database
-operations without installing third-party software or writing any single
-line into the terminal.
-
-The default credentials for the database are;
-
-::
-
-    username : laravel
-    password: laravel
-
-**Please don't forget to change these before you publish your project**
-
-Building the Frontend
----------------------
-
-The project will automatically build the frontend in the **production**
-mode. If you want to build the project in **development** mode, change
-``NMP_MODE`` variable in the ``.env`` file.
-
 Essential Configurations
-------------------------
+========================
 
 There are bound services like the Payment Services (Vodacom Tanzania and
 Airtel Tanzania), Ticketing Service(Trello API), Critical Logging
@@ -68,7 +8,7 @@ your payments through these services you need to change/edit following
 files/configurations
 
 Mobile Payment Configurations - Vodacom
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 1. ``ips`` array element in ``services.php``. The file is located under
    ``app/config/``. The element ``ips`` holds a list of authorized
@@ -86,7 +26,7 @@ Mobile Payment Configurations - Vodacom
        VODACOM_SSL_CERT="LOCATION-OF-.PEM-FILE"
 
 Mobile Payment Configurations - Airtel
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
 When we set up the second payment provider in our live system, we were
 not that experienced by setting up **VPN Tunnels** that's why we go with
@@ -118,17 +58,18 @@ The following change should be done in the ``.env`` file
     AIRTEL_REQUEST_URL="AIRTEL SERVICE URL"
 
 STS Meter Configuration
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 Currently, the system supports only CALIN-STS meters. To be able to
 communicate with Calin and generate STS-Tokens, the following changes
-should be done; 1. Your key and the endpoint where you create those
-tokens.
+should be done;
 
-.. code:: bash
+1. Your key and the endpoint where you create those tokens.
 
-    CALIN_KEY="CALIN-KEY"
-    CALIN_CLIENT_URL="CALIN-CLIENT-URL"
+    .. code:: bash
+
+        CALIN_KEY="CALIN-KEY"
+        CALIN_CLIENT_URL="CALIN-CLIENT-URL"
 
 2. If you have meters which can send their consumption data to CALIN's
    server please fill the below-listed variables too
@@ -140,7 +81,7 @@ tokens.
        METER_DATA_USER="METER-READING-USER"
 
 Pusher(Web Socket)
-~~~~~~~~~~~~~~~~~~
+------------------
 
    Pusher is used to notify your admins when a new ticket is been
    created.
@@ -153,7 +94,7 @@ Pusher(Web Socket)
        PUSHER_APP_CLUSTER="YOUR-CLUSTER ex. eu"
 
 Slack
-~~~~~
+-----
 
 Slack is the current critical logging service that alerts the admins
 when something went wrong. Like a transaction is been canceled.
@@ -162,18 +103,8 @@ when something went wrong. Like a transaction is been canceled.
 
     LOG_SLACK_WEBHOOK_URL="SLACK-WEBHOOK-URL"
 
-Installing Customer Registration App (Android)
-----------------------------------------------
-
-Please read the project documentation to get an idea of why we're using
-a separate app to register customers via an Android-App. Follow the link
-to get to the Customer Register App Project
-
 Setup Sms Communication
 -----------------------
-
-There are currently two supported SMS-Gateways. 1. Bongo Live Tanzania
-2. Inhouse SMS-Gateway Application
 
 Configuration for BongoLive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -276,52 +207,7 @@ To be able to send E-Mails please edit following configuration variables
         'default_message' => 'Please do not reply to this email', // adds a small footer text to your email
     ];
 
-Deploy for Production
----------------------
 
-The production mode will automatically install **Let's Encrypt SSL
-certificates**. Therefore you need firstly register a domain.
-
-When you have your domain, the first thing to do is editing ``app.conf``
-and ``db.conf``\ (if you planning to use phpMyAdmin as well) files under
-``NginxProxy/conf.p``.
-
-Afer that, paste ``chmod +x ./install-production.sh`` to make the file
-executable and run it via ``./install-production.sh``. This will guide
-you through the installation and finally, it will start the services.
-
-Development
------------
-
-The development environment is served under **http://mpmanager.local**
-To reach the site over the given url; enter the following lines to your
-hosts file. #### For Linux/Mac Users
-
-::
-
-    /etc/hosts
-    127.0.0.1       mpmanager.local
-    127.0.0.1       db.mpmanager.local
-
-For Windows
-~~~~~~~~~~~
-
-::
-
-    c:\windows\system32\drivers\etc\hosts
-    127.0.0.1       mpmanager.local
-    127.0.0.1       db.mpmanager.local
-
-Generate API Documentation
---------------------------
-
-To generate the API documentation, jump in the ``laravel`` container and
-type ``php artisan apidoc:generate`` in the **mpmanager** directory.
-That will create a new **docs** folder under **public** folder. The API
-documentation should be available under
-``http://mpmanager.local/docs/``. The whole API documentation will be
-migrated to third-party tools like Postman or Swagger.
-
-
-
+There are currently two supported SMS-Gateways. 1. Bongo Live Tanzania
+2. Inhouse SMS-Gateway Application
 
