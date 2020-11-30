@@ -27,5 +27,5 @@ msgstr ""
 
 #: ../../index.rst:2
 msgid "Welcome to the MPM Documentation"
-msgstr "This is a French Title"
+msgstr "This is a French Titles"
 
